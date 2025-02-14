@@ -13,8 +13,24 @@ void async_print(const char *message) {
     cb.aio_fildes = STDOUT_FILENO;
     cb.aio_buf = message;
     cb.aio_nbytes = strlen(message);
-    aio_write(&cb);
-    while (aio_error(&cb) == EINPROGRESS);
+
+    if (aio_write(&cb) < 0) {
+        perror("aio_write failed");
+        return;
+    }
+
+    while (aio_error(&cb) == EINPROGRESS) {
+    }
+
+    int err = aio_error(&cb);
+    if (err != 0) {
+        perror("aio_write failed");
+    } else {
+        ssize_t bytes_written = aio_return(&cb);
+        if (bytes_written != cb.aio_nbytes) {
+            fprintf(stderr, "Not all bytes were written\n");
+        }
+    }
 }
 
 int main() {
