@@ -20,5 +20,5 @@
 
 ### Реалізація
 2. OpenMP (Open Multi-Processing) реалізовано у файлі main_omp.c
-5. aio.h використано у коді файлу main_aio.c де вивід тексту про роботу функції
+3. Аналіз продуктивності проведено за допомогою valgrind --tool=callgrind ./progr
 6. Версія програми на C++ реалізована у файлах main.cpp module1.cpp module2.cpp
